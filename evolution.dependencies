@@ -1,0 +1,20 @@
+[
+    {
+        "remote":       "github",
+        "repository":   "AbhiSgr/device_xiaomi_sakura",
+        "target_path":  "device/xiaomi/sakura",
+        "revision":     "elle"
+    },
+    {
+        "remote":       "github",
+        "repository":   "FrosT2k5/vendor_xiaomi_sakura",
+        "target_path":  "vendor/xiaomi",
+        "revision":     "wip"
+    },
+    {
+        "remote":       "github",
+        "repository":   "SuperCosmicBeing/revvz",
+        "target_path":  "kernel/xiaomi/sakura",
+        "revision":     "beta-4.9-Q"
+    }
+]

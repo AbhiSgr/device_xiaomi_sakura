@@ -1,6 +1,11 @@
 #
-# system.prop for msm8953-common
+# system.prop for sakura
 #
+
+# ART
+PRODUCT_PROPERTY_OVERRIDES += \
+dalvik.vm.dex2oat-filter=speed \
+dalvik.vm.image-dex2oat-filter=speed
 
 # Audio
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -11,8 +16,12 @@ audio.offload.min.duration.secs=30 \
 audio.offload.video=true \
 ro.config.media_vol_steps=25 \
 ro.config.vc_call_vol_steps=7 \
+persist.vendor.audio.fluence.speaker=true \
+persist.vendor.audio.fluence.voicecall=true \
+persist.vendor.audio.fluence.voicerec=false \
 persist.vendor.btstack.enable.splita2dp=false \
 ro.vendor.audio.sdk.ssr=false \
+ro.vendor.audio.sdk.fluencetype=fluence \
 vendor.audio.flac.sw.decoder.24bit=true \
 vendor.audio.offload.buffer.size.kb=64 \
 vendor.audio.offload.gapless.enabled=true \
@@ -40,33 +49,38 @@ qcom.bluetooth.soc=smd \
 ro.bluetooth.hfp.ver=1.7 \
 ro.qualcomm.bt.hci_transport=smd
 
-# Bpf
+#Blur
 PRODUCT_PROPERTY_OVERRIDES += \
-ro.kernel.ebpf.supported=1
+persist.sys.sf.disable_blurs=1
+
+# BPF
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.kernel.ebpf.supported=true
 
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
-camera.display.lmax=1280x720 \
-camera.display.umax=1920x1080 \
-camera.hal1.packagelist=com.skype.raider,com.google.android.talk \
-camera.lowpower.record.enable=1 \
+vidc.enc.dcvs.extra-buff-count=2 \
 media.camera.ts.monotonic=1 \
-persist.camera.gyro.disable=0 \
-persist.camera.isp.clock.optmz=0 \
-persist.camera.stats.test=5 \
-persist.vendor.qti.telephony.vt_cam_interface=1 \
-vidc.enc.dcvs.extra-buff-count=2
-
-# Charger
-PRODUCT_PRODUCT_PROPERTIES += \
-ro.charger.disable_init_blank=true \
-ro.charger.enable_suspend=true
+persist.vendor.camera.display.lmax=1280x720 \
+persist.vendor.camera.display.umax=1920x1080 \
+vendor.camera.hal1.packagelist=com.skype.raider,com.google.android.talk \
+vendor.camera.lowpower.record.enable=1 \
+vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.huaqin.factory,com.mi.AutoTest \
+vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime \
+vendor.camera.aux.packageblacklist=com.discord \
+persist.vendor.qti.telephony.vt_cam_interface=2 \
+persist.vendor.camera.dual.camera=0 \
+persist.vendor.camera.eis.enable=1 \
+persist.vendor.camera.gyro.disable=0 \
+persist.vendor.camera.isp.clock.optmz=0 \
+persist.vendor.camera.stats.test=5 \
+persist.vendor.camera.CDS=off \
+persist.camera.HAL3.enabled=1
 
 # Cne/Dpm
 PRODUCT_PROPERTY_OVERRIDES += \
 persist.vendor.cne.feature=1 \
-persist.vendor.dpm.feature=1 \
-persist.vendor.dpm.loglevel=0
+persist.vendor.dpm.feature=0
 
 # Coresight
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -81,19 +95,20 @@ debug.mdpcomp.logs=0 \
 debug.sf.enable_hwc_vds=1 \
 debug.sf.hw=0 \
 debug.sf.latch_unsignaled=1 \
+debug.cpurend.vsync=false \
 debug.sf.recomputecrop=0 \
 dev.pm.dyn_samplingrate=1 \
-persist.debug.wfd.enable=0 \
+persist.debug.wfd.enable=1 \
 persist.demo.hdmirotationlock=false \
 persist.hwc.enable_vds=1 \
 persist.hwc.mdpcomp.enable=true \
 ro.opengles.version=196610 \
 ro.qualcomm.cabl=0 \
-ro.sf.lcd_density=480 \
+ro.sf.lcd_density=420 \
 ro.vendor.display.cabl=2 \
 sdm.debug.disable_skip_validate=1 \
 vendor.display.disable_skip_validate=1 \
-vendor.display.enable_default_color_mode=1 \
+vendor.display.enable_default_color_mode=0 \
 vendor.gralloc.enable_fb_ubwc=1
 
 # DRM
@@ -121,6 +136,7 @@ ro.gps.agps_provider=1
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
 av.debug.disable.pers.cache=1 \
+debug.sf.enable_hwc_vds=1 \
 media.aac_51_output_enabled=true \
 media.msm8956hw=0 \
 media.stagefright.audio.sink=280 \
@@ -133,6 +149,8 @@ vendor.vidc.dec.downscalar_width=1920 \
 vendor.vidc.disable.split.mode=1 \
 vendor.vidc.enc.disable.pq=true \
 vendor.vidc.enc.disable_bframes=1 \
+vendor.video.disable.ubwc=1 \
+vendor.gralloc.enable_fb_ubwc=1 \
 vendor.video.disable.ubwc=1
 
 # Memory optimizations
@@ -141,6 +159,7 @@ ro.vendor.qti.sys.fw.bservice_enable=true
 
 # Perf
 PRODUCT_PROPERTY_OVERRIDES += \
+ro.sys.fw.dex2oat_thread_count=8 \
 ro.vendor.extension_library=libqti-perfd-client.so
 
 # Netmgrd
@@ -169,28 +188,38 @@ persist.dbg.vt_avail_ovr=1 \
 persist.dbg.wfc_avail_ovr=1 \
 persist.vendor.radio.apm_sim_not_pwdn=1 \
 persist.radio.multisim.config=dsds \
+persist.radio.VT_ENABLE=1 \
+persist.radio.volte.dan_support=true \
+persist.sys.cust.lte_config=true \
 persist.vendor.radio.custom_ecc=1 \
+persist.vendor.radio.jbims=1 \
 persist.vendor.radio.rat_on=combine \
 persist.vendor.radio.sib16_support=1 \
 persist.vendor.data.iwlan.enable=true \
+persist.dbg.ims_volte_enable=1 \
+persist.data.iwlan=1 \
+persist.data.iwlan.ipsec.ap=1 \
 ril.subscription.types=NV,RUIM \
 rild.libargs=-d/dev/smd0 \
 rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
+ro.telephony.iwlan_operation_mode=legacy \
 ro.telephony.call_ring.multiple=false \
 ro.telephony.default_network=22,20 \
-service.qti.ims.enabled=1
+persist.sys.fflag.override.settings_network_and_internet_v2=true \
+service.qti.ims.enabled=1 \
+persist.vendor.vt.supported=1 \
+persist.vendor.sys.cnd.iwlan=1 \
+persist.vendor.cne.logging.qxdm=3974
 
 # Time Services
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.timed.enable=true
+persist.timed.enable=true \
+persist.vendor.delta_time.enable=true \
+persist.delta_time.enable=true
 
 # Tcp
 PRODUCT_PROPERTY_OVERRIDES += \
 net.tcp.2g_init_rwnd=10
-
-# UI
-PRODUCT_PROPERTY_OVERRIDES += \
-sys.use_fifo_ui=1
 
 # Usb
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -199,3 +228,7 @@ persist.vendor.usb.config.extra=none
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
 wifi.interface=wlan0
+
+# Zygote preforking
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.device_config.runtime_native.usap_pool_enabled=true
